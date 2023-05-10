@@ -1,0 +1,25 @@
+
+.window-wrapper{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 22rem;
+    padding: 1rem;
+    .window-small {
+        border: 2px solid black;
+        border-radius: 1rem;
+        width: 20rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        div {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            font-size: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+}
