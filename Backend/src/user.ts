@@ -7,7 +7,7 @@ export default class User{
     public situps: number;
     public run: number;
     
-    constructor()
+    constructor(old: User | null = null)
     {
         this.name = "Unknown";
         this.password = "";
@@ -16,6 +16,14 @@ export default class User{
         this.squats = 0;
         this.situps = 0;
         this.run = 0;
+        if(old === null) return;
+        this.name = old.name;
+        this.password = old.password;
+        this.pushups = old.pushups;
+        this.pullups = old.pullups;
+        this.squats = old.squats;
+        this.situps = old.situps;
+        this.run = old.run;
     }
 
 }

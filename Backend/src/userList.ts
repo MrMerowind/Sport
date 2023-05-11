@@ -26,13 +26,25 @@ export default class UserList{
     {
         for(let i = 0; i < this.list.length; i++)
         {
-            if(this.list[i].name == newUser.name
-                && this.list[i].password == newUser.password)
-                {
-                    this.list[i] = newUser;
-                }
+            if(this.list[i].name != newUser.name
+                || this.list[i].password != newUser.password) continue;
+            
+            this.list[i] = newUser;
+            this.save();
+            return;
         }
-        this.save();
+        this.list.push(newUser);
+    }
+
+    public getUsersWithoutPassword(): User[]
+    {
+        const returnList: User[] = [];
+        this.list.forEach(user => {
+            const copyUser = new User(user);
+            copyUser.password = "secret";
+            returnList.push(copyUser);
+        })
+        return returnList;
     }
 
     public save()

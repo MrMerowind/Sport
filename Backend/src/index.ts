@@ -1,10 +1,6 @@
 import express from "express";
-import http from "http";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import compression from "compression";
-import cors from "cors";
-import { readFileSync } from "fs"
+import UserList from "userList";
+import { stringify } from "querystring";
 
 const app = express();
 
@@ -18,11 +14,25 @@ app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
+const userList = new UserList();
+userList.load();
+
 app.get("/hof", (req, res) => {
     
-    const response = readFileSync('./words.txt', 'utf-8');
+    const response = userList.getUsersWithoutPassword();
     res.send(response);
 })
+
+app.post("/update", (req, res) => {
+    
+    if(!req.body.toString()) return;
+    userList.updateUser(req.body);
+    userList.save();
+    // res.send(response);
+})
+
+
+
 
 server.listen(40227, () => {
     console.log("Server running");
