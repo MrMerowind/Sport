@@ -1,6 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-export default function YourPoints() {
+interface YourPointsProps
+{
+  name: string;
+  password: string;
+}
+
+export default function YourPoints(props: YourPointsProps) {
 
   const [pushups, setPushups] = useState(0);
   const [pullups, setPullups] = useState(0);
@@ -9,17 +15,32 @@ export default function YourPoints() {
   const [run, setRun] = useState(0);
 
   useEffect(() => {
+    /*
     const savedPushups = localStorage.getItem("pushups");
     const savedPullups = localStorage.getItem("pullups");
     const savedSquats = localStorage.getItem("squats");
     const savedSitups = localStorage.getItem("situps");
     const savedRun = localStorage.getItem("run");
+    */
 
+    fetch("https://backend.sport.mrmero.com/load/" + props.name + "/" + props.password).then(response => response.json())
+      .then(data => {
+        setPushups(data.pushups);
+        setPullups(data.pullups);
+        setSquats(data.squats);
+        setSitups(data.situps);
+        setRun(data.run);
+
+
+      });
+    
+    /*
     if(savedPushups) setPushups(Number.parseInt(savedPushups));
     if(savedPullups) setPullups(Number.parseInt(savedPullups));
     if(savedSquats) setSquats(Number.parseInt(savedSquats));
     if(savedSitups) setSitups(Number.parseInt(savedSitups));
     if(savedRun) setRun(Number.parseInt(savedRun));
+    */
 
   }, []);
 

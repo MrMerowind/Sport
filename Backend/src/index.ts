@@ -20,7 +20,7 @@ app.get("/hof", (req, res) => {
     try
     {
         const response = userList.getUsersWithoutPassword();
-        res.send(response);
+        res.send(response).end();
     }
     catch(e)
     {
@@ -28,21 +28,24 @@ app.get("/hof", (req, res) => {
     }
 })
 
-app.post("/load", bodyParser.json(), (req, res) => {
+app.get('/load/:login/:password', function(req, res) {
+
     try
     {
-        console.log("Request load: ", req.body);
-        const response: User = userList.getUserData(req.body);
+        const search: User = new User();
+        search.name = req.params.login;
+        search.password = req.params.password;
+        console.log("Request login for user: ", search.name);
+        const response: User = userList.getUserData(search);
 
-        console.log("Response load: ", response);
-        res.send(response);
+        console.log("Response: ", response);
+        res.send(response).end();
     }
     catch(e)
     {
         res.end();
     }
-    
-})
+});
 
 app.post("/update", bodyParser.json(), (req, res) => {
     try
