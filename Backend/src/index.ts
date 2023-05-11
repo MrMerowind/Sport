@@ -50,7 +50,7 @@ app.get('/load/:login/:password', function(req, res) {
 app.post("/update", bodyParser.json(), (req, res) => {
     try
     {
-        console.log("Request update: ", req.body);
+        console.log("Request update for user: ", req.body.name);
         userList.updateUser(req.body);
         userList.save();
         res.end();
