@@ -54,6 +54,18 @@ export default class UserList{
         return returnList;
     }
 
+    public getUserData(findUser: User): User | null
+    {
+        for(let i = 0; i < this.list.length; i++)
+        {
+            if(this.list[i].name == findUser.name && this.list[i].password == findUser.password)
+            {
+                return this.list[i];
+            }
+        }
+        return null;
+    }
+
     public save()
     {
         unlinkSync(UserList.savePath);
