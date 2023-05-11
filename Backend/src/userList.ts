@@ -1,13 +1,18 @@
-import { readFileSync, writeFileSync, unlinkSync } from "fs"
-import User from "user";
+import { readFileSync, writeFileSync, unlinkSync, existsSync } from "fs"
+import User from "./user"
 
 export default class UserList{
-    public list: User[];
+    public list: User[] = [];
+    public static readonly savePath = "./data.txt";
 
     public load()
     {
-        const words = readFileSync("./data.txt", "utf-8");
+        if (!existsSync(UserList.savePath)) return;
+
+        const words = readFileSync(UserList.savePath, "utf-8");
         const wordsLines = words.split("\n");
+        if(!wordsLines) return;
+
         wordsLines.forEach(line => {
             const lineData = line.split(" ");
             const newUser = new User();
@@ -39,6 +44,8 @@ export default class UserList{
     public getUsersWithoutPassword(): User[]
     {
         const returnList: User[] = [];
+        if(!this.list) return returnList;
+
         this.list.forEach(user => {
             const copyUser = new User(user);
             copyUser.password = "secret";
@@ -49,7 +56,7 @@ export default class UserList{
 
     public save()
     {
-        unlinkSync("./data.txt");
+        unlinkSync(UserList.savePath);
         let textToSave = "";
         for(let i = 0; i < this.list.length; i++)
         {
@@ -62,6 +69,6 @@ export default class UserList{
             textToSave += this.list[i].situps.toString() + " ";
             textToSave += this.list[i].run.toString();
         }
-        writeFileSync("./data.txt", textToSave, "utf-8");
+        writeFileSync(UserList.savePath, textToSave, "utf-8");
     }
 }

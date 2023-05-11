@@ -1,10 +1,15 @@
 import express from "express";
-import UserList from "userList";
+import UserList from "./userList";
+import cors from "cors";
 
 const app = express();
 
 const userList = new UserList();
 userList.load();
+
+app.use(cors({
+    origin: '*'
+}));
 
 app.get("/hof", (req, res) => {
     
