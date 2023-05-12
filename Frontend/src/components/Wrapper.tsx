@@ -3,6 +3,7 @@ import Punctaction from "./Punctaction"
 import YourPoints from './YourPoints'
 import Login from './Login';
 import User from '../data/user';
+import HallOfFame from './HallOfFame';
 
 /*async function postData(url: string, data: User) {
   const response = await fetch(url, {
@@ -43,11 +44,14 @@ export default function Wrapper() {
 
   return (
     <div className='window-wrapper'>
+      {name !== "" ? <p>Zalogowano jako: {name}</p> : null}
       {name !== "" ? <Punctaction /> : null}
       {name !== "" ? <YourPoints name={name} password={password} /> : null}
+      {name !== "" ? <HallOfFame /> : null}
       {name === "" ? <Login singin={setCredentials}/> : null}
       <div>
         {name !== "" ? <button type='button' onClick={() => {setName("")}}>Wyloguj</button> : null}
+        
       </div>
     </div>
   )

@@ -19,9 +19,11 @@ export default function Login(props: LoginProps) {
 
   return (
     <div>
-        <input type='text' value={loginInput} onChange={handleLogin}></input><br/>
-        <input type='password' value={passwordInput} onChange={handlePassword}></input><br/>
-        <button type='button' onClick={() => {props.singin(loginInput, passwordInput)}}>Zaloguj/Zarejestruj</button>
+        <label>Login:</label><br/>
+        <input type='text' className='input-login' value={loginInput} onChange={handleLogin}></input><br/>
+        <label>Hasło:</label><br/>
+        <input type='password' className='input-login' value={passwordInput} onChange={handlePassword}></input><br/><br/>
+        <button className='text button-login' type='button' onClick={() => {props.singin(loginInput, passwordInput)}}>Zaloguj/Zarejestruj</button>
     </div>
   )
 }

@@ -62,8 +62,13 @@ export default class UserList{
             {
                 return this.list[i];
             }
+            else if(this.list[i].name == findUser.name)
+            {
+                return null;
+            }
         }
-        return null;
+        this.list.push(findUser);
+        return findUser;
     }
 
     public save()
