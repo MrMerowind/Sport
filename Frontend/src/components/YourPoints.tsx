@@ -45,25 +45,43 @@ export default function YourPoints(props: YourPointsProps) {
 
   }, []);
 
-  function saveOnServer(){
-
+  useLayoutEffect(() => {
     if(pushups < 0) setPushups(0);
     if(pullups < 0) setPullups(0);
     if(squats < 0) setSquats(0);
     if(situps < 0) setSitups(0);
     if(run < 0) setRun(0);
+  }, [pushups, pullups, squats, situps, run]);
 
-    const updateEntity = new User();
-    updateEntity.name = props.name;
-    updateEntity.password = props.password;
-    updateEntity.pushups = pushups;
-    updateEntity.pullups = pullups;
-    updateEntity.squats = squats;
-    updateEntity.situps = situps;
-    updateEntity.run = run;
+  const [needSave, setNeedSave] = useState(false);
 
-    postData("https://backend.sport.mrmero.com/update", updateEntity);
+  function saveOnServer(){
+    setNeedSave(true);
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+
+      if(needSave === true)
+      {
+
+        const updateEntity = new User();
+        updateEntity.name = props.name;
+        updateEntity.password = props.password;
+        updateEntity.pushups = pushups;
+        updateEntity.pullups = pullups;
+        updateEntity.squats = squats;
+        updateEntity.situps = situps;
+        updateEntity.run = run;
+  
+        postData("https://backend.sport.mrmero.com/update", updateEntity);
+        setNeedSave(false);
+      }
+
+
+    }, 5000);
+    return () => clearInterval(interval);
+  }, );
 
   
   return (
@@ -75,6 +93,7 @@ export default function YourPoints(props: YourPointsProps) {
         <div><span>Bieg 100m:</span><span><span>{run}</span> <button type="button" onClick={() => {setRun(prev => prev - 1);saveOnServer();}}>-</button> <button type="button" onClick={() => {setRun(prev => prev + 1);saveOnServer();}}>+</button></span></div>
         <hr/>
         <div><span>Punkty:</span><span>{pushups * 10 + pullups * 25 + squats * 3 + situps * 3 + run * 20}</span></div>
+        {needSave === true ? (<div className='text-red'><p className='text'>Zapisywanie zmian.</p></div>) : (<div className='text text-green'><p className='text'>Zmiany zapisane.</p></div>)}
     </div>
   )
 }
