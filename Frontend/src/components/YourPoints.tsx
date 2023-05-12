@@ -77,6 +77,19 @@ export default function YourPoints(props: YourPointsProps) {
         postData("https://backend.sport.mrmero.com/update", updateEntity);
         setNeedSave(false);
       }
+      else
+      {
+        fetch("https://backend.sport.mrmero.com/load/" + props.name + "/" + props.password).then(response => response.json())
+          .then(data => {
+            setPushups(data.pushups);
+            setPullups(data.pullups);
+            setSquats(data.squats);
+            setSitups(data.situps);
+            setRun(data.run);
+
+
+      });
+      }
 
 
     }, 5000);

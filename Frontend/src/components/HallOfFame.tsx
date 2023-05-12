@@ -17,7 +17,9 @@ export default function HallOfFame() {
       }, );
 
   return (
-    <div className='window-small'>{usersData.length > 0 ? (usersData.map(user => {
+    <div className='window-small'>
+        <div><span>Użytkownik:</span><span><span>Punkty</span></span></div>
+        {usersData.length > 0 ? (usersData.map(user => {
         
         return <div><span>{user.name}:</span><span><span>{user.pushups * 10 + user.pullups * 25 + user.squats * 3 + user.situps * 3 + user.run * 20}</span></span></div>
 
